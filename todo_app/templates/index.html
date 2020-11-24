@@ -3,20 +3,61 @@
 
 {% block content %}
   <div class="jumbotron">
-    <h1 class="display-4">To-Do App </h1>
-    <p class="lead">Just another to-do app</p>
+    <h1 class="display-4">To-Do App 9000 </h1>
+    <p class="lead">Simply the best to-do app</p>
   </div>
 
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Add Items</h2>
+        <form action="/add_item"  method="post" id="form_1">
+          <div>
+            <label for="name">Enter Item Title: </label>
+            <input type="text" name="field_name" id="field_name" required>
+          </div>
+          <div>
+            <button type="submit" form="form_1"> Submit</button>
+          </div>
+        </form>
+    </div>
+    <br><br>
+
+    <div class="col-md-12">
+      <h2>Remove Item</h2>
+        <form action="/remove_item"  method="post" id="form_2">
+          <div>
+            <label for="name">Enter Item ID: </label>
+            <input type="text" name="item_id" id="item_id" required>
+          </div>
+          <div>
+            <button type="submit" form="form_2"> Submit</button>
+          </div>
+        </form>
+    </div>
+
+    <div class="col-md-12">
+      <h2>Clear All Items</h2>
+        <form action="/clear_items"  method="post" id="form_3">
+          <div>
+            <button type="submit" form="form_3"> Submit</button>
+          </div>
+        </form>
+    </div>
+
+
+  </div>
+  <br><br><br>
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
       <ul class="list-group mb-4">
         {% for item in todo_items %}
         <li>
-          {{item.status}} - {{item.title}}
+          [{{item.id}}]  {{item.title}} - {{item.status}}
         </li>
         {% endfor %}
       </ul>
     </div>
   </div>
+
 {% endblock %}

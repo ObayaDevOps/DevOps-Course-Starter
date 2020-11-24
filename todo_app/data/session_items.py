@@ -13,7 +13,7 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    return session.get('items', _DEFAULT_ITEMS)
+    return session.get('items', _DEFAULT_ITEMS) 
 
 
 def get_item(id):
@@ -40,18 +40,22 @@ def add_item(title):
     Returns:
         item: The saved item.
     """
-    items = get_items()
 
+    items = get_items()
     # Determine the ID for the item based on that of the previously added item
     id = items[-1]['id'] + 1 if items else 0
+    new_item = { 'id': id, 'title': title, 'status': 'Not Started' }
 
-    item = { 'id': id, 'title': title, 'status': 'Not Started' }
+    if(items != None):
+        # Add the item to the list
+        items.append(new_item)
+    else:
+        # Or create a list with the new items
+        items = [new_item]
 
-    # Add the item to the list
-    items.append(item)
     session['items'] = items
+    return new_item
 
-    return item
 
 
 def save_item(item):
@@ -67,3 +71,55 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
+
+def mark_item_complete(id):
+    """
+    Changes the status of the item to complete.
+
+    Args:
+        title: The title of the item.
+
+    """
+    items = get_items()
+    item = next((item for item in items if item['id'] == int(id)), None)
+
+    if item != None:
+        item['status'] = 'Completed'
+
+    new_items = items.ap
+
+
+
+def remove_item(id):
+    """
+    Removes item with the specified title from the session.
+
+    Args:
+        title: The title of the item.
+
+    Returns:
+        item: A Boolean representing if the removal was successful or not.
+    """
+    items = get_items()
+
+    item = next((item for item in items if item['id'] == int(id)), None)
+
+    if item != None:
+        new_items = items.remove(item)
+        session['items'] = new_items
+        return True
+    else:
+        return False
+
+
+def clear_all_items():
+    """
+    Removes all items from the session.
+
+    """
+    session['items'] = []
+
+
+    
+    
